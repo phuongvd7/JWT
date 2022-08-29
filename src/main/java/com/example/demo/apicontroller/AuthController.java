@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.apicontroller;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -83,23 +83,13 @@ public class AuthController {
 		return new ResponseEntity<>(new ResponseMessage("create success!!!"), HttpStatus.OK);
 	}
 
-//	@PostMapping("/signin")
-//	public ResponseEntity<?> login(@Valid @RequestBody SignInForm signInForm) {
-//		Authentication authentication = authenticationManager.authenticate(
-//				new UsernamePasswordAuthenticationToken(signInForm.getUsername(), signInForm.getPassword()));
-//		SecurityContextHolder.getContext().setAuthentication(authentication);
-//		String token = jwtProvider.createToken(authentication); // day la authentication cua he thong
-//
-//		UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-//		return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(), userPrinciple.getAuthorities()));
-//	}
-	 @PostMapping("/signin")
-	    public ResponseEntity<?> login(@Valid @RequestBody SignInForm signInForm) {
-	        Authentication authentication = authenticationManager.authenticate(
-	                new UsernamePasswordAuthenticationToken(signInForm.getUsername(), signInForm.getPassword()));
-	        SecurityContextHolder.getContext().setAuthentication(authentication);
-	        String token = jwtProvider.createToken(authentication);
-	        UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-	        return ResponseEntity.ok(new JwtResponse(token,userPrinciple.getName(), userPrinciple.getAuthorities()));
-}
+	@PostMapping("/signin")
+	public ResponseEntity<?> login(@Valid @RequestBody SignInForm signInForm) {
+		Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(signInForm.getUsername(), signInForm.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String token = jwtProvider.createToken(authentication); // day la authentication cua he thong
+		UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+		return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getName(), userPrinciple.getAuthorities()));
+	}
 }
